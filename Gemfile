@@ -1,5 +1,6 @@
 source 'https://rubygems.org' do
-  # Comment explaining
-  gem 'rubocop', '~>0.81.0'
-  gem 'rspec'
+  # Testing
+  gem 'rspec', '~> 3.9'
+  # Linting
+  gem 'rubocop', '~>0.81'
 end
