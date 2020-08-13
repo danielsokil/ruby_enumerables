@@ -19,6 +19,26 @@ describe ::Enumerable do
       { "Jane Doe" => 10, "Jim Doe" => 6 }.my_each { |item| array << item[0] }
       expect(array).to(eq(["Jane Doe", "Jim Doe"]))
     end
+
+    describe "with negative scenarios" do
+      it "should loop An Enumerable" do
+        array = []
+        %w[a b c].my_each { |item| array << item }
+        expect(array).not_to(eq(%w[a b d]))
+      end
+  
+      it "should loops A Range" do
+        array = []
+        (1...4).my_each { |item| array << item }
+        expect(array).not_to(eq([1, 2, 3, 4]))
+      end
+  
+      it "should loop A Hash" do
+        array = []
+        { "Jane Doe" => 10, "Jim Doe" => 6 }.my_each { |item| array << item[0] }
+        expect(array).not_to(eq(["Jane Doe", 10]))
+      end
+    end
   end
 
   describe "#my_each_with_index" do
