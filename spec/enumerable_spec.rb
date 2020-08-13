@@ -50,6 +50,17 @@ describe ::Enumerable do
 
       expect(hash).to(eq({ 0 => 9, 1 => 8, 2 => 7, 3 => 6, 4 => 5, 5 => 4, 6 => 3, 7 => 2, 8 => 1 }))
     end
+
+    describe "with negative scenarios" do
+      it "should loop a Hash With Index" do
+        hash = {}
+        [9, 8, 7, 6, 5, 4, 3, 2, 1].my_each_with_index do |item, index|
+          hash[index] = item
+        end
+
+        expect(hash).not_to(eq([9, 8, 7, 6, 5, 4, 3, 2, 1]))
+      end
+    end
   end
 
   describe "#my_select" do
@@ -110,6 +121,44 @@ describe ::Enumerable do
         [].my_all?
       ).to(eq(true))
     end
+
+    describe "with negative scenarios" do
+      it "should accept a block " do
+        expect(
+          %w[ant bear cat].my_all? { |word| word.length >= 3 }
+        ).not_to(eq(false))
+      end
+
+      it "Loops A Range" do
+        expect(
+          (0..10).my_all? { |number| number < 100 }
+        ).not_to(eq(false))
+      end
+
+      it "Accepts A Regex Pattern" do
+        expect(
+          %w[ant bear cat].my_all?(/t/)
+        ).not_to(eq(true))
+      end
+
+      it "Accepts A Class As Input" do
+        expect(
+          [1, 2i, 3.14].my_all?(::Numeric)
+        ).not_to(eq(false))
+      end
+
+      it "All Items Are Truthy" do
+        expect(
+          [nil, true, 99].my_all?
+        ).not_to(eq(true))
+      end
+
+      it "Returns True If Array Empty" do
+        expect(
+          [].my_all?
+        ).not_to(eq(false))
+      end
+    end
   end
 
   describe "#my_any?" do
@@ -141,6 +190,38 @@ describe ::Enumerable do
       expect(
         [].my_any?
       ).to(eq(false))
+    end
+
+    describe "with negative scenarios" do
+      it "Accepts A Block " do
+        expect(
+          %w[ant bear cat].my_any? { |word| word.length >= 4 }
+        ).not_to(eq(false))
+      end
+
+      it "Accepts A Regex Pattern" do
+        expect(
+          %w[ant bear cat].my_any?(/d/)
+        ).not_to(eq(true))
+      end
+
+      it "Accepts A Class As Input" do
+        expect(
+          [1, 2i, 3.14].my_any?(::Numeric)
+        ).not_to(eq(false))
+      end
+
+      it "Any Items Are Truthy" do
+        expect(
+          [nil, true, 99].my_any?
+        ).not_to(eq(false))
+      end
+
+      it "Returns False If Array Empty" do
+        expect(
+          [].my_any?
+        ).not_to(eq(true))
+      end
     end
   end
 
@@ -180,6 +261,7 @@ describe ::Enumerable do
         [].my_none?
       ).to(eq(true))
     end
+
     describe "with negative scenarios" do
       it "applies block operations on an array" do
         expect(
@@ -282,6 +364,28 @@ describe ::Enumerable do
 
     it 'Performs multiplication bases on block' do
       expect((5..10).my_inject(1) { |product, n| product * n }).to(eq(151_200))
+    end
+
+    describe 'with negative scenarios' do
+      it 'Accepts accepts a symbol' do
+        expect((5..10).my_inject(:+)).not_to(eq(50))
+      end
+
+      it 'Accepts a block' do
+        expect((5..10).my_inject { |sum, n| sum + n }).not_to(eq(50))
+      end
+
+      it 'Performs block actions on string array' do
+        expect(%w[cat sheep bear].my_inject { |memo, word| memo.length > word.length ? memo : word }).not_to(eq("bear"))
+      end
+
+      it 'Performs multiplication based on symbol entered' do
+        expect((5..10).my_inject(1, :*)).not_to(eq(200))
+      end
+
+      it 'Performs multiplication bases on block' do
+        expect((5..10).my_inject(1) { |product, n| product * n }).not_to(eq(200))
+      end
     end
   end
 end
