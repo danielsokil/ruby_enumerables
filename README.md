@@ -3,25 +3,32 @@
 The goal of this project is to add new methods to the existing Enumerable module, a method that is identical to the next ones, but (obviously) does not use the original ones.
 
 Create #my_each
-Create #my_each_with_index 
-Create #my_select 
-Create #my_all? 
+Create #my_each_with_index
+Create #my_select
+Create #my_all?
 Create #my_any?
 Create #my_none?
 Create #my_count
 Create #my_map
 Create #my_inject
 
+## Install Dependencies
+
+- `bundle install`
+
 ## Run Debugger
 
-`rdebug-ide enumerables.rb`
+- `rdebug-ide enumerables.rb`
 
+## Run Tests
+
+- `rspec`
 
 ## Built With
 
 - Ruby
 - Rubocop
-- Test-RSpec
+- RSpec
 
 ## Authors
 
@@ -38,7 +45,7 @@ Create #my_inject
 
 To get a local copy up and running follow these simple example steps.
 
-1. Open the terminal comand line window
+1. Open the terminal command line window
 2. `git clone https://github.com/epinczinger/ruby_enumerables.git`
 3. Execute `ruby enumerables.rb`
 4. Enjoy!
